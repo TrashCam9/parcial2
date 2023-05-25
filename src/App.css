@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+#book-img {
+  width: 300px;
+  height: 300px;
+  
+}
+
+#loginContainer {
+  display: flex;
+  width: 60%;
+  justify-content:center;
+  margin:0 auto;
+}
+
