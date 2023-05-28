@@ -3,7 +3,7 @@ import { Card } from 'react-bootstrap';
 
 function Book(props){
     return(
-        <Card>
+        <div>
             <Card.Img variant = "top" src = {props.book.image}/>
             <Card.Body>
                 <Card.Title>{props.book.name}</Card.Title>
@@ -11,7 +11,8 @@ function Book(props){
             <Card.Footer>
                 <small className="text-muted">{props.book.isbn}</small>
             </Card.Footer>
-        </Card>
+        </div>
+        
     );
 }
 

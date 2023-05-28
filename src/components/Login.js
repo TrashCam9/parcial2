@@ -1,26 +1,29 @@
 import React, {useState} from 'react';
 import '../App.css'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
-import Books from './Books';
+import { createSearchParams, Link, useNavigate } from 'react-router-dom';
 
-function Login() {
+
+function Login(props) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const emailExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
     const URL = 'http://localhost:3000/'
     const navigate = useNavigate(); 
+    const [rol, setRol] = useState("");
     const handleInputChange = (e) =>{
         const {id, value} = e.target;
         if (id === "email"){
             setEmail(value);
         }else if (id === "password"){
-            setPassword(value);   
+            setPassword(value);  
         }
     }
 
-    const goHome = () => {
-        navigate('/home');
+    const goHome = (role) => {
+        navigate("/home", {state:{
+            rol: role
+        }})
     }
 
     const login = () => {
@@ -46,9 +49,11 @@ function Login() {
             })
             .then(res => res.json())
             .then(data =>{
-                goHome();
+               goHome(data.rol)
             })
-            .catch(err => goHome())
+            .catch(err => {
+                console.log(err)
+             })
             
         }
     }
@@ -65,18 +70,18 @@ function Login() {
                     <Row>
                         <h1>Tu Libreria Aliada</h1>
                         <Form>
-                            <Form.Group className="mb-3" controlId="formBasicEmail">
+                            <Form.Group className="mb-3">
                                 <Form.Label>User name or Email</Form.Label>
                                 <Form.Control id="email" type="email" onChange = {(e) => handleInputChange(e)} placeholder="Enter email" />
                             </Form.Group>
-                            <Form.Group className="mb-3" controlId="formBasicPassword">
+                            <Form.Group className="mb-3">
                                 <Form.Label>Password</Form.Label>
                                 <Form.Control id="password" type="password" onChange = {(e) => handleInputChange(e)} placeholder="Password" />
                                 <Form.Text className="text-muted">
                                     Forgot password?
                                 </Form.Text>
                             </Form.Group>
-                            <Button variant="primary" type="submit" onClick={()=>login()}>
+                            <Button variant="primary" onClick={()=>login() }>
                                 Sign In
                             </Button>
                         </Form>
